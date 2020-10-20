@@ -86,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 /* ADJUST
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |      | BRI- | BRI+ |      |      |      |                    | PREV | PLAY | NEXT | VOL- | VOL+ | PSCR |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   `----------------------------'           '------''--------------------'
  */
   [_ADJUST] = LAYOUT( \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+  XXXXXXX, KC_BRID, KC_BRIU, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLD, KC_VOLU, KC_PSCR, \
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
@@ -151,6 +151,10 @@ void oled_task_user(void) {
   }
 }
 #endif // OLED_DRIVER_ENABLE
+
+uint32_t layer_state_set_user(uint32_t state) {
+  return update_tri_layer_state(state, _RAISE, _LOWER, _ADJUST);
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
